@@ -1,0 +1,2 @@
+rootProject.name = "OG Media Viewer"
+include ':app'

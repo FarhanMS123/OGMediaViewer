@@ -185,4 +185,10 @@ public class ViewActivity extends AppCompatActivity {
         ));
         finish();
     }
+
+    public void deletePost(View view){
+        postsDB.deletePost(id);
+
+        finish();
+    }
 }

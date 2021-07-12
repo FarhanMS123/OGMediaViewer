@@ -47,6 +47,15 @@ public class PostsDB {
         db.close();
     }
 
+     public void deletePost(Integer id){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String[] selectionArgs = {id.toString()};
+        db.delete(DBHelper.TABLE_POSTS, "id=?", selectionArgs);
+
+        db.close();
+     }
+
     public Post getPostById(Integer id){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selection = "id=?";

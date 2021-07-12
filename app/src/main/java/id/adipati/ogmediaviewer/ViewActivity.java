@@ -38,6 +38,7 @@ public class ViewActivity extends AppCompatActivity {
     private String url;
     private String thumbnail;
     private  Integer count = 0;
+    private String name;
     private Integer id;
 
     private WebView webView;
@@ -62,8 +63,33 @@ public class ViewActivity extends AppCompatActivity {
         if(status.equals("get_post")){
             url = getIntent().getStringExtra("url");
             getPost(url);
+
+            binding.btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    save(view);
+                }
+            });
+
         }else if(status.equals("from_id")){
             id = getIntent().getIntExtra("id", -1);
+            Post post = postsDB.getPostById(id);
+            url = post.ori;
+            thumbnail = post.thumbnail;
+            count = post.length;
+            name = post.name;
+
+            binding.btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    saveChanges(view);
+                }
+            });
+
+            getPost(post.ori);
+            binding.txtTitle.setText(name);
+            binding.btnSave.setText("Save Changes");
+            binding.btnDelete.setVisibility(View.VISIBLE);
         }
     }
 
@@ -140,6 +166,19 @@ public class ViewActivity extends AppCompatActivity {
 
     public void save(View view){
         postsDB.insertPost(new Post(
+                -1,
+                binding.txtTitle.getText().toString(),
+                this.url,
+                this.thumbnail,
+                this.count
+        ));
+        finish();
+    }
+
+    public void saveChanges(View view){
+        postsDB.updatePost(new Post(
+                id,
+                binding.txtTitle.getText().toString(),
                 this.url,
                 this.thumbnail,
                 this.count

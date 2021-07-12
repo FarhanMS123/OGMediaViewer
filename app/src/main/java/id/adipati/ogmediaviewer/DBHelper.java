@@ -8,10 +8,11 @@ import android.support.annotation.Nullable;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "OGMedia";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     public static final String TABLE_POSTS = "posts";
     public static final String FIELD_POSTS_ID = "id";
+    public static final String FIELD_POSTS_NAME = "name";
     public static final String FIELD_POSTS_ORI = "original_url";
     public static final String FIELD_POSTS_THUMBNAIL = "thumbnail";
     public static final String FIELD_POSTS_LENGTH = "image_count";
@@ -24,7 +25,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase){
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_POSTS + " (" +
                 FIELD_POSTS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                FIELD_POSTS_ORI + " TEXT UNIQUE," +
+                FIELD_POSTS_NAME + " TEXT," +
+                FIELD_POSTS_ORI + " TEXT," +
                 FIELD_POSTS_THUMBNAIL + " TEXT," +
                 FIELD_POSTS_LENGTH + " INTEGER)");
     }

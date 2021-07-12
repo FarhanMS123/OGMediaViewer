@@ -2,6 +2,7 @@ package id.adipati.ogmediaviewer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView((View) binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+//        setSupportActionBar(binding.toolbar);
         Window window = getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -30,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
         postsDB = new PostsDB(this);
         postsDB.openDB();
+
+
+        RVPostsAdapter rvPostsAdapter = new RVPostsAdapter(postsDB.getPosts());
+        LinearLayoutManager llManager = new LinearLayoutManager(this);
+
+        binding.rvPosts.setAdapter(rvPostsAdapter);
+        binding.rvPosts.setLayoutManager(llManager);
     }
 
     public void getPost(View view){
@@ -37,5 +45,13 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("status", "get_post");
         intent.putExtra("url", binding.txtUrl.getText().toString());
         startActivity(intent);
+    }
+
+    public void refresh(View view){
+        RVPostsAdapter rvPostsAdapter = new RVPostsAdapter(postsDB.getPosts());
+        LinearLayoutManager llManager = new LinearLayoutManager(this);
+
+        binding.rvPosts.setAdapter(rvPostsAdapter);
+        binding.rvPosts.setLayoutManager(llManager);
     }
 }
